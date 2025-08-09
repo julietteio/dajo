@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chart Embed</title>
+    <style>
+      html, body { margin:0; padding:0; }
+      #chart { width: 100%; height: 420px; }
+    </style>
+    <!-- Highcharts (same source you’re using) -->
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+  </head>
+  <body>
+    <div id="chart" aria-label="Embedded chart"></div>
+    <script>
+      // Same options as your main page
+      Highcharts.chart('chart', {
+        title: { text: 'Sample weekly data' },
+        subtitle: { text: 'Single-file setup • Highcharts via CDN' },
+        credits: { enabled: false },
+        accessibility: { enabled: true },
+        xAxis: {
+          categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+          title: { text: 'Day' }
+        },
+        yAxis: { title: { text: 'Value' } },
+        tooltip: { shared: true },
+        legend: { align: 'center', verticalAlign: 'bottom' },
+        series: [
+          { name: 'Series A', data: [29,71,106,129,144,176,135] },
+          { name: 'Series B', data: [34,80,96,140,150,170,120] }
+        ]
+      });
+    </script>
+  </body>
+</html>

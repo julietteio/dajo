@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Highcharts • Single-page demo</title>
+    <meta name="description" content="A super simple one-page site with Highcharts loaded via CDN." />
+    <style>
+      :root { --maxw: 960px; }
+      * { box-sizing: border-box; }
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; margin: 0; color: #111; background: #fafafa; }
+      header { border-bottom: 1px solid #e6e6e6; background: #fff; }
+      header .wrap { max-width: var(--maxw); margin: 0 auto; padding: 20px; }
+      main { max-width: var(--maxw); margin: 0 auto; padding: 24px 20px 48px; }
+      h1 { font-size: 1.25rem; margin: 0 0 8px; }
+      p.lead { margin: 0 0 20px; color: #444; }
+      #chart { height: 420px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 8px; }
+      footer { max-width: var(--maxw); margin: 24px auto 40px; padding: 0 20px; color: #666; font-size: .9rem; }
+      a { color: #0b5fff; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      noscript { display: block; background: #fff0f0; border: 1px solid #ffdede; padding: 12px; border-radius: 8px; }
+      textarea.embed { width: 100%; min-height: 260px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12.5px; padding: 12px; border-radius: 10px; border: 1px solid #e6e6e6; background: #fff; }
+      .embed-wrap { margin-top: 18px; }
+      .embed-wrap h2 { font-size: 1rem; margin: 0 0 8px; color: #333; }
+      .embed-wrap p { margin: 0 0 8px; color: #555; }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="wrap">
+        <h1>Jet on a Single Page</h1>
+        <p class="lead">Drop this file on any static host and you’re done.</p>
+      </div>
+    </header>
+
+    <main>
+      <noscript>JavaScript is required to render the chart.</noscript>
+      <div id="chart" aria-label="Demo line chart"></div>
+
+      <!-- Chart-only embed snippet (just copy/paste this elsewhere) -->
+      <div class="embed-wrap">
+        <h2>Embed this chart</h2>
+        <p>Copy and paste this snippet to render the same chart without this page’s chrome:</p>
+        <textarea class="embed" readonly>
+<div id="myHighchart" style="width:100%;max-width:720px;height:420px;"></div>
+<script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+<script>
+  Highcharts.chart('myHighchart', {
+    title: { text: 'Sample weekly data' },
+    subtitle: { text: 'Single-file setup • Highcharts via CDN' },
+    credits: { enabled: false },
+    accessibility: { enabled: true },
+    xAxis: {
+      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      title: { text: 'Day' }
+    },
+    yAxis: { title: { text: 'Value' } },
+    tooltip: { shared: true },
+    legend: { align: 'center', verticalAlign: 'bottom' },
+    series: [
+      { name: 'Series A', data: [29, 71, 106, 129, 144, 176, 135] },
+      { name: 'Series B', data: [34, 80, 96, 140, 150, 170, 120] }
+    ]
+  });
+</script>
+        </textarea>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Using <strong>Highcharts</strong> via jsDelivr. For commercial use, check the
+        Highcharts licence. Data shown is placeholder only.
+      </p>
+    </footer>
+
+    <!-- Highcharts (single source: jsDelivr) -->
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+
+    <script>
+      // Minimal example: a responsive line chart
+      document.addEventListener('DOMContentLoaded', () => {
+        Highcharts.chart('chart', {
+          title: { text: 'Sample weekly data' },
+          subtitle: { text: 'Single-file setup • Highcharts via CDN' },
+          credits: { enabled: false },
+          accessibility: { enabled: true },
+          xAxis: {
+            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            title: { text: 'Day' }
+          },
+          yAxis: { title: { text: 'Value' } },
+          tooltip: { shared: true },
+          legend: { align: 'center', verticalAlign: 'bottom' },
+          series: [
+            { name: 'Series A', data: [29, 71, 106, 129, 144, 176, 135] },
+            { name: 'Series B', data: [34, 80, 96, 140, 150, 170, 120] }
+          ]
+        });
+      });
+    </script>
+  </body>
+</html>
