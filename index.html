@@ -23,6 +23,10 @@
       .embed-wrap { margin-top: 18px; }
       .embed-wrap h2 { font-size: 1rem; margin: 0 0 8px; color: #333; }
       .embed-wrap p { margin: 0 0 8px; color: #555; }
+      .copy-row { display: flex; justify-content: flex-end; gap: 8px; margin: 4px 0 6px; }
+      .copy-btn { appearance: none; border: 1px solid #d0d7ff; background: #0b5fff; color: #fff;   padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;}
+      .copy-btn[disabled] { opacity: .75; cursor: default; }
+
     </style>
   </head>
 
@@ -39,12 +43,16 @@
       <div id="chart" aria-label="Demo line chart"></div>
 
       <!-- Chart-only embed snippet (just copy/paste this elsewhere) -->
+
 <div class="embed-wrap">
   <h2>Embed this chart</h2>
   <p>Use one of the snippets below.</p>
 
   <p><strong>Option A — Fixed-height iframe (works everywhere)</strong></p>
-  <textarea class="embed" readonly>
+  <div class="copy-row">
+    <button class="copy-btn" data-copy="#embedA">Copy</button>
+  </div>
+  <textarea id="embedA" class="embed" readonly>
 <iframe
   style="width: 100%; border: 0;"
   height="420"
@@ -54,7 +62,10 @@
   </textarea>
 
   <p><strong>Option B — Auto-resizing iframe (needs a tiny script on the host page)</strong></p>
-  <textarea class="embed" readonly>
+  <div class="copy-row">
+    <button class="copy-btn" data-copy="#embedB">Copy</button>
+  </div>
+  <textarea id="embedB" class="embed" readonly>
 <iframe
   id="dajo_chart_1"
   style="width: 100%; border: 0;"
@@ -74,9 +85,10 @@
   </textarea>
 
   <p style="color:#666;font-size:.9rem">
-    Note: For Option B, make sure <code>embed.html</code> posts its height via <code>postMessage</code> (I added that in the earlier sample with a <code>ResizeObserver</code>).
+    Note: For Option B, make sure <code>embed.html</code> posts its height via <code>postMessage</code> (the earlier sample included a <code>ResizeObserver</code> that sends <code>{ type: 'hc-embed-size', height }</code>).
   </p>
 </div>
+
     </main>
 
     <footer>
@@ -112,5 +124,37 @@
         });
       });
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const target = document.querySelector(btn.dataset.copy);
+      if (!target) return;
+      const text = target.value || target.textContent;
+
+      // Prefer async clipboard; fallback to execCommand for file:// or older browsers
+      const revert = (label) => { btn.textContent = label; btn.disabled = false; };
+      const original = btn.textContent;
+      btn.textContent = 'Copied!'; btn.disabled = true;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        }
+        setTimeout(() => revert(original), 1500);
+      } catch (e) {
+        revert('Copy failed');
+        setTimeout(() => revert(original), 1500);
+      }
+    });
+  });
+});
+</script>
+
   </body>
 </html>
