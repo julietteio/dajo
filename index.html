@@ -15,15 +15,13 @@
       main { max-width: var(--maxw); margin: 0 auto; padding: 24px 20px 48px; }
       h1 { font-size: 1.25rem; margin: 0 0 8px; }
       p.lead { margin: 0 0 20px; color: #444; }
-
       #chart, #chart2 {
-  height: 420px;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 8px;
-}
-
+        height: 420px;
+        background: #FAFAFA;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 8px;
+        }
       footer { max-width: var(--maxw); margin: 24px auto 40px; padding: 0 20px; color: #666; font-size: .9rem; }
       a { color: #0b5fff; text-decoration: none; }
       a:hover { text-decoration: underline; }
@@ -157,8 +155,8 @@
 
     <script>
       // Minimal example: a responsive line chart
-      document.addEventListener('DOMContentLoaded', () => {
 
+      document.addEventListener('DOMContentLoaded', () => {
 
         Highcharts.chart('chart', {
           title: { text: 'Sample weekly data' },
@@ -180,8 +178,8 @@
 
         Highcharts.chart('chart2', {
           chart: { type: 'arearange', zooming: { type: 'x' } },
-          title: { text: 'Temperature variation by day' },
-          subtitle: { text: 'Demo arearange • Highcharts More' },
+          title: { enabled: false },
+          subtitle: { enabled: false },
           credits: { enabled: false },
           xAxis: { type: 'datetime' },
           yAxis: { title: { text: null } },
