@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arearange Embed</title>
+    <style>
+      html, body { margin: 0; padding: 0; }
+      #chart { width: 100%; height: 420px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts-more.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script>
+      Highcharts.chart('chart', {
+        chart: { type: 'arearange', zooming: { type: 'x' } },
+        title: { text: 'Temperature variation by day' },
+        credits: { enabled: false },
+        xAxis: { type: 'datetime' },
+        yAxis: { title: { text: null } },
+        tooltip: { shared: true, crosshairs: true, valueSuffix: '°C' },
+        legend: { enabled: false },
+        series: [{
+          name: 'Temperatures',
+          data: [
+            [Date.UTC(2025, 0, 1),  2,  9],
+            [Date.UTC(2025, 0, 2),  1, 10],
+            [Date.UTC(2025, 0, 3), -1,  8],
+            [Date.UTC(2025, 0, 4),  0, 11],
+            [Date.UTC(2025, 0, 5), -2,  7],
+            [Date.UTC(2025, 0, 6),  1,  9],
+            [Date.UTC(2025, 0, 7),  3, 12]
+          ],
+          color: {
+            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+            stops: [[0, '#ff6666'], [1, '#6666ff']]
+          }
+        }]
+      });
+
+      // Auto-resize support for Option B
+      const ro = new ResizeObserver(() => {
+        const h = document.documentElement.scrollHeight;
+        parent.postMessage({ type: 'hc-embed-size', height: h }, '*');
+      });
+      ro.observe(document.body);
+    </script>
+  </body>
+</html>

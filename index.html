@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Highcharts • Single-page demo</title>
     <meta name="description" content="A super simple one-page site with Highcharts loaded via CDN." />
+
     <style>
       :root { --maxw: 960px; }
       * { box-sizing: border-box; }
@@ -14,7 +15,15 @@
       main { max-width: var(--maxw); margin: 0 auto; padding: 24px 20px 48px; }
       h1 { font-size: 1.25rem; margin: 0 0 8px; }
       p.lead { margin: 0 0 20px; color: #444; }
-      #chart { height: 420px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 8px; }
+
+      #chart, #chart2 {
+  height: 420px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 8px;
+}
+
       footer { max-width: var(--maxw); margin: 24px auto 40px; padding: 0 20px; color: #666; font-size: .9rem; }
       a { color: #0b5fff; text-decoration: none; }
       a:hover { text-decoration: underline; }
@@ -40,41 +49,88 @@
 
     <main>
       <noscript>JavaScript is required to render the chart.</noscript>
+
+      <!-- Chart 1 -->
       <div id="chart" aria-label="Demo line chart"></div>
 
-      <!-- Chart-only embed snippet (just copy/paste this elsewhere) -->
+      <!-- Embeds for Chart 1 -->
+      <div class="embed-wrap">
+        <h2>Embed this chart</h2>
+        <p>Use one of the snippets below.</p>
+        <p><strong>Option A — Fixed-height iframe (works everywhere)</strong></p>
+          <div class="copy-row">
+            <button class="copy-btn" data-copy="#embedA">Copy</button>
+          </div>
+        <textarea id="embedA" class="embed" readonly>
+          <iframe
+            style="width: 100%; border: 0;"
+            height="420"
+            scrolling="no"
+            src="https://julietteio.github.io/dajo/embed.html">
+          </iframe>
+        </textarea>
+        <p><strong>Option B — Auto-resizing iframe (needs a tiny script on the host page)</strong></p>
+          <div class="copy-row">
+            <button class="copy-btn" data-copy="#embedB">Copy</button>
+          </div>
+         <textarea id="embedB" class="embed" readonly>
+          <iframe
+            id="dajo_chart_1"
+            style="width: 100%; border: 0;"
+            scrolling="no"
+            src="https://julietteio.github.io/dajo/embed.html">
+          </iframe>
+          <script>
+            (function () {
+            const frame = document.getElementById('dajo_chart_1');
+            window.addEventListener('message', function (e) {
+            const m = e.data;
+            if (!m || m.type !== 'hc-embed-size') return;
+            frame.style.height = (m.height || 420) + 'px';
+            });
+            })();
+          </script>
+        </textarea>
+        <p style="color:#666;font-size:.9rem"> Note: For Option B, make sure <code>embed.html</code> posts its height via <code>postMessage</code> (the earlier sample included a <code>ResizeObserver</code> that sends <code>{ type: 'hc-embed-size', height }</code>).
+        </p>
+    </div>
 
+  <!-- Chart 2 -->
+    <h2 style="margin-top:28px">Arearange (temperature band)</h2>
+    <div id="chart2" aria-label="Arearange chart"></div>
+
+<!-- Embeds for Chart 2 -->
 <div class="embed-wrap">
-  <h2>Embed this chart</h2>
+  <h2>Embed this arearange chart</h2>
   <p>Use one of the snippets below.</p>
 
   <p><strong>Option A — Fixed-height iframe (works everywhere)</strong></p>
   <div class="copy-row">
-    <button class="copy-btn" data-copy="#embedA">Copy</button>
+    <button class="copy-btn" data-copy="#embedA2">Copy</button>
   </div>
-  <textarea id="embedA" class="embed" readonly>
+  <textarea id="embedA2" class="embed" readonly>
 <iframe
   style="width: 100%; border: 0;"
   height="420"
   scrolling="no"
-  src="https://julietteio.github.io/dajo/embed.html">
+  src="https://julietteio.github.io/dajo/embed-arearange.html">
 </iframe>
   </textarea>
 
   <p><strong>Option B — Auto-resizing iframe (needs a tiny script on the host page)</strong></p>
   <div class="copy-row">
-    <button class="copy-btn" data-copy="#embedB">Copy</button>
+    <button class="copy-btn" data-copy="#embedB2">Copy</button>
   </div>
-  <textarea id="embedB" class="embed" readonly>
+  <textarea id="embedB2" class="embed" readonly>
 <iframe
-  id="dajo_chart_1"
+  id="dajo_chart_2"
   style="width: 100%; border: 0;"
   scrolling="no"
-  src="https://julietteio.github.io/dajo/embed.html">
+  src="https://julietteio.github.io/dajo/embed-arearange.html">
 </iframe>
 <script>
   (function () {
-    const frame = document.getElementById('dajo_chart_1');
+    const frame = document.getElementById('dajo_chart_2');
     window.addEventListener('message', function (e) {
       const m = e.data;
       if (!m || m.type !== 'hc-embed-size') return;
@@ -83,10 +139,6 @@
   })();
 </script>
   </textarea>
-
-  <p style="color:#666;font-size:.9rem">
-    Note: For Option B, make sure <code>embed.html</code> posts its height via <code>postMessage</code> (the earlier sample included a <code>ResizeObserver</code> that sends <code>{ type: 'hc-embed-size', height }</code>).
-  </p>
 </div>
 
     </main>
@@ -100,11 +152,14 @@
 
     <!-- Highcharts (single source: jsDelivr) -->
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts-more.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
 
     <script>
       // Minimal example: a responsive line chart
       document.addEventListener('DOMContentLoaded', () => {
+
+
         Highcharts.chart('chart', {
           title: { text: 'Sample weekly data' },
           subtitle: { text: 'Single-file setup • Highcharts via CDN' },
@@ -122,6 +177,35 @@
             { name: 'Series B', data: [34, 80, 96, 140, 150, 170, 120] }
           ]
         });
+
+        Highcharts.chart('chart2', {
+          chart: { type: 'arearange', zooming: { type: 'x' } },
+          title: { text: 'Temperature variation by day' },
+          subtitle: { text: 'Demo arearange • Highcharts More' },
+          credits: { enabled: false },
+          xAxis: { type: 'datetime' },
+          yAxis: { title: { text: null } },
+          tooltip: { shared: true, crosshairs: true, valueSuffix: '°C' },
+          legend: { enabled: false },
+          series: [{
+            name: 'Temperatures',
+            // Minimal sample data: [time, low, high]
+            data: [
+              [Date.UTC(2025, 0, 1),  2,  9],
+              [Date.UTC(2025, 0, 2),  1, 10],
+              [Date.UTC(2025, 0, 3), -1,  8],
+              [Date.UTC(2025, 0, 4),  0, 11],
+              [Date.UTC(2025, 0, 5), -2,  7],
+              [Date.UTC(2025, 0, 6),  1,  9],
+              [Date.UTC(2025, 0, 7),  3, 12]
+            ],
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [[0, '#ff6666'], [1, '#6666ff']]
+            }
+          }]
+        });
+
       });
     </script>
 
