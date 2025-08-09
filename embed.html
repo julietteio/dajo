@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chart Embed</title>
     <style>
-      html, body { margin:0; padding:0; }
+      html, body { margin: 0; padding: 0; }
       #chart { width: 100%; height: 420px; }
     </style>
-    <!-- Highcharts (same source you’re using) -->
+    <!-- Highcharts (jsDelivr, same as your main page) -->
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
   </head>
   <body>
     <div id="chart" aria-label="Embedded chart"></div>
     <script>
-      // Same options as your main page
+      // Same options you used on index.html
       Highcharts.chart('chart', {
         title: { text: 'Sample weekly data' },
         subtitle: { text: 'Single-file setup • Highcharts via CDN' },
@@ -33,6 +33,13 @@
           { name: 'Series B', data: [34,80,96,140,150,170,120] }
         ]
       });
+
+      // Optional: auto-resize support (posts height to parent)
+      const ro = new ResizeObserver(() => {
+        const h = document.documentElement.scrollHeight;
+        parent.postMessage({ type: 'hc-embed-size', height: h }, '*');
+      });
+      ro.observe(document.body);
     </script>
   </body>
 </html>
