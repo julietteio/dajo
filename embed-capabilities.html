@@ -56,7 +56,19 @@ Highcharts.chart('capabilities', {
   { name: 'AI-assistance',           y: 8,  z: 74 },
   { name: 'Integrations',            y: 8,  z: 88 }
 ]
-  }]
+  }],
+
+// Mobile rules
+  responsive: {
+    rules: [{
+      condition: { maxWidth: 600 },
+      chartOptions: {
+        plotOptions: { series: { dataLabels: { enabled: false } } }
+      }
+    }]
+  }
+
+
 });
 
 

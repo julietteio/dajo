@@ -305,7 +305,15 @@
   }]
 });
 
-
+// Mobile rules
+  responsive: {
+    rules: [{
+      condition: { maxWidth: 600 },
+      chartOptions: {
+        plotOptions: { series: { dataLabels: { enabled: false } } }
+      }
+    }]
+  }
 
       });
 
