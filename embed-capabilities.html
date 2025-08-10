@@ -7,6 +7,9 @@
   <style>
     html, body { height: 100%; margin: 0; }
     #capabilities { height: clamp(320px, 75vw, 520px); }
+    @media (max-width: 600px) {
+        #capabilities .highcharts-data-label { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -19,54 +22,54 @@
 
   <script>
     // Render chart
-Highcharts.chart('capabilities', {
-  chart: { type: 'variablepie' },
-  title: { text: null },
-  subtitle: { text: null },                 // remove note
-  credits: { enabled: false },
-  legend: { enabled: false },               // remove legend
-  colors: [
-    '#4caefe',
-    '#3dc3e8',
-    '#2dd9db',
-    '#1feeaf',
-    '#0ff3a0',
-    '#00e887',
-    '#23e274'
-  ],
-  tooltip: {
+    Highcharts.chart('capabilities', {
+    chart: { type: 'variablepie' },
+    title: { text: null },
+    subtitle: { text: null },                 // remove note
+    credits: { enabled: false },
+    legend: { enabled: false },               // remove legend
+    colors: [
+        '#4caefe',
+        '#3dc3e8',
+        '#2dd9db',
+        '#1feeaf',
+        '#0ff3a0',
+        '#00e887',
+        '#23e274'
+    ],
+    tooltip: {
     useHTML: true,
     formatter: function () {
       return `<b>${this.point.name}</b>`;   // name only
-    }
-  },
-  series: [{
+        }
+    },
+    series: [{
     name: 'Capabilities',
     minPointSize: 15,
     innerSize: '20%',                       // smaller donut hole
     zMin: 50,
     zMax: 100,
     dataLabels: { enabled: true, format: '{point.name}', style: { textOutline: 'none' } },
-  data: [
-  { name: 'Your domain expertise',   y: 33, z: 92 },
-  { name: 'Data expertise',          y: 15, z: 96 },
-  { name: 'Visualisation expertise', y: 15, z: 86 },
-  { name: 'Data technology',         y: 10, z: 82 },
-  { name: 'Automations',             y: 10, z: 78 },
-  { name: 'AI-assistance',           y: 8,  z: 74 },
-  { name: 'Integrations',            y: 8,  z: 88 }
-]
-  }],
-
-// Mobile rules
-  responsive: {
+    data: [
+    { name: 'Your domain expertise',   y: 33, z: 92 },
+    { name: 'Data expertise',          y: 15, z: 96 },
+    { name: 'Visualisation expertise', y: 15, z: 86 },
+    { name: 'Data technology',         y: 10, z: 82 },
+    { name: 'Automations',             y: 10, z: 78 },
+    { name: 'AI-assistance',           y: 8,  z: 74 },
+    { name: 'Integrations',            y: 8,  z: 88 }
+    ]
+    }],
+    // Mobile rules
+    responsive: {
     rules: [{
-      condition: { maxWidth: 600 },
-      chartOptions: {
-        plotOptions: { series: { dataLabels: { enabled: false } } }
-      }
-    }]
-  }
+    condition: { maxWidth: 600 },
+    chartOptions: {
+      series: [{ dataLabels: { enabled: false } }],
+      plotOptions: { variablepie: { dataLabels: { enabled: false } } }
+    }
+  }]
+}
 
 
 });
