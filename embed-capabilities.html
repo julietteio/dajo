@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embed • Capabilities</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #capabilities { height: 520px; }
+  </style>
+</head>
+<body>
+  <div id="capabilities" aria-label="Capabilities variable pie"></div>
+
+  <!-- Highcharts -->
+  <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/variable-pie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+
+  <script>
+    // Render chart
+    Highcharts.chart('capabilities', {
+      chart: { type: 'variablepie' },
+      title: { text: null },
+      subtitle: { text: 'Slice width = focus · Slice radius = maturity/reach' },
+      credits: { enabled: false },
+      legend: { align: 'center', verticalAlign: 'bottom' },
+      tooltip: {
+        useHTML: true,
+        formatter: function () {
+          return `
+            <b>${this.point.name}</b><br>
+            Focus (size): <b>${this.point.y}</b>/10<br>
+            Maturity (radius): <b>${this.point.z}</b>/100
+          `;
+        }
+      },
+      series: [{
+        name: 'Capabilities',
+        minPointSize: 15,
+        innerSize: '35%',
+        zMin: 50,
+        zMax: 100,
+        dataLabels: { enabled: true, format: '{point.name}', style: { textOutline: 'none' } },
+        showInLegend: true,
+        data: [
+          { name: 'Domain expertise',        y: 9,  z: 92 },
+          { name: 'Data expertise',          y: 10, z: 96 },
+          { name: 'Visualisation expertise', y: 8,  z: 86 },
+          { name: 'Data technology',         y: 7,  z: 82 },
+          { name: 'Automations',             y: 7,  z: 78 },
+          { name: 'AI-assistance',           y: 6,  z: 74 },
+          { name: 'Integrations',            y: 7,  z: 88 }
+        ]
+      }]
+    });
+
+    // Auto-resize: post height to parent (for your Option B embed)
+    (function () {
+      const target = document.getElementById('capabilities');
+      const ro = new ResizeObserver(() => {
+        const h = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight,
+          target.offsetHeight
+        );
+        window.parent && window.parent.postMessage({ type: 'hc-embed-size', height: h }, '*');
+      });
+      ro.observe(target);
+      // Fire once on load
+      window.parent && window.parent.postMessage({ type: 'hc-embed-size', height: target.offsetHeight }, '*');
+    })();
+  </script>
+</body>
+</html>

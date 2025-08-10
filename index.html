@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Highcharts • Single-page demo</title>
-    <meta name="description" content="A super simple one-page site with Highcharts loaded via CDN." />
+    <title>DaJo Land</title>
+    <meta name="description" content="Sandpit for charts." />
 
     <style>
       :root { --maxw: 960px; }
@@ -139,6 +139,53 @@
   </textarea>
 </div>
 
+  <!-- Chart 3 -->
+    <h2 style="margin-top:28px">Our Capabilities</h2>
+    <div id="capabilities" style="height:520px"></div>
+
+<!-- Embeds for Chart 3 (Capabilities) -->
+<div class="embed-wrap">
+  <h2>Embed this capabilities chart</h2>
+  <p>Use one of the snippets below.</p>
+
+  <p><strong>Option A — Fixed-height iframe (works everywhere)</strong></p>
+  <div class="copy-row">
+    <button class="copy-btn" data-copy="#embedA3">Copy</button>
+  </div>
+  <textarea id="embedA3" class="embed" readonly>
+<iframe
+  style="width: 100%; border: 0;"
+  height="520"
+  scrolling="no"
+  src="https://julietteio.github.io/dajo/embed-capabilities.html">
+</iframe>
+  </textarea>
+
+  <p><strong>Option B — Auto-resizing iframe (needs a tiny script on the host page)</strong></p>
+  <div class="copy-row">
+    <button class="copy-btn" data-copy="#embedB3">Copy</button>
+  </div>
+  <textarea id="embedB3" class="embed" readonly>
+<iframe
+  id="dajo_chart_3"
+  style="width: 100%; border: 0;"
+  scrolling="no"
+  src="https://julietteio.github.io/dajo/embed-capabilities.html">
+</iframe>
+<script>
+  (function () {
+    const frame = document.getElementById('dajo_chart_3');
+    window.addEventListener('message', function (e) {
+      const m = e.data;
+      if (!m || m.type !== 'hc-embed-size') return;
+      frame.style.height = (m.height || 520) + 'px';
+    });
+  })();
+</script>
+  </textarea>
+</div>
+
+
     </main>
 
     <footer>
@@ -151,6 +198,7 @@
     <!-- Highcharts (single source: jsDelivr) -->
 <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts-more.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/variable-pie.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/data.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
 
@@ -178,45 +226,84 @@
           ]
         });
 
-  Highcharts.chart('chart2', {
-    chart: { type: 'arearange', zooming: { type: 'x' } },
-    title: { text: null },
-    subtitle: { text: null },
-    credits: { enabled: false },
-    xAxis: { type: 'datetime' },
-    yAxis: { title: { text: null } },
-    tooltip: { shared: true, crosshairs: true, valueSuffix: '°C' },
-    legend: { enabled: false },
+        Highcharts.chart('chart2', {
+          chart: { type: 'arearange', zooming: { type: 'x' } },
+          title: { text: null },
+          subtitle: { text: null },
+          credits: { enabled: false },
+          xAxis: { type: 'datetime' },
+          yAxis: { title: { text: null } },
+          tooltip: { shared: true, crosshairs: true, valueSuffix: '°C' },
+          legend: { enabled: false },
 
-    data: {
-      // Served by GitHub Pages from your repo
-      csvURL: 'https://julietteio.github.io/dajo/data/temperature.csv?v=1',
-      beforeParse: function (csv) { return csv.replace(/\n\n/g, '\n'); },
+          data: {
+            // Served by GitHub Pages from your repo
+            csvURL: 'https://julietteio.github.io/dajo/data/temperature.csv?v=1',
+            beforeParse: function (csv) { return csv.replace(/\n\n/g, '\n'); },
 
-      // If your CSV is: Date,Low,High  (one city/band)
-      seriesMapping: [{ x: 0, low: 1, high: 2 }]
+            // If your CSV is: Date,Low,High  (one city/band)
+            seriesMapping: [{ x: 0, low: 1, high: 2 }]
 
-      // If your CSV is: Date,FloridaLow,FloridaHigh,BergenLow,BergenHigh
-      // use this instead:
-      // seriesMapping: [
-      //   { x: 0, low: 1, high: 2 },
-      //   { x: 0, low: 3, high: 4 }
-      // ]
-    },
+            // If your CSV is: Date,FloridaLow,FloridaHigh,BergenLow,BergenHigh
+            // use this instead:
+            // seriesMapping: [
+            //   { x: 0, low: 1, high: 2 },
+            //   { x: 0, low: 3, high: 4 }
+            // ]
+          },
 
-    series: [{
-      name: 'Temperatures',
-      color: {
-        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-        stops: [[0, '#ff6666'], [1, '#6666ff']]
-      }
+          series: [{
+            name: 'Temperatures',
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [[0, '#ff6666'], [1, '#6666ff']]
+            }
+          }
+          // If using two series, add a second:
+          // ,{ name: 'Bergen', color: 'rgba(102,102,255,0.55)' }
+          ]
+        });
+
+
+        Highcharts.chart('capabilities', {
+  chart: { type: 'variablepie' },
+  title: { text: null },
+  subtitle: { text: 'Slice width = focus · Slice radius = maturity/reach' },
+  credits: { enabled: false },
+  legend: { align: 'center', verticalAlign: 'bottom' },
+  tooltip: {
+    useHTML: true,
+    formatter: function () {
+      return `
+        <b>${this.point.name}</b><br>
+        Focus (size): <b>${this.point.y}</b>/10<br>
+        Maturity (radius): <b>${this.point.z}</b>/100
+      `;
     }
-    // If using two series, add a second:
-    // ,{ name: 'Bergen', color: 'rgba(102,102,255,0.55)' }
+  },
+  series: [{
+    name: 'Capabilities',
+    minPointSize: 15,
+    innerSize: '35%',
+    zMin: 50,
+    zMax: 100,
+    dataLabels: { enabled: true, format: '{point.name}', style: { textOutline: 'none' } },
+    showInLegend: true,
+    data: [
+      { name: 'Domain expertise',        y: 9,  z: 92 },
+      { name: 'Data expertise',          y: 10, z: 96 },
+      { name: 'Visualisation expertise', y: 8,  z: 86 },
+      { name: 'Data technology',         y: 7,  z: 82 },
+      { name: 'Automations',             y: 7,  z: 78 },
+      { name: 'AI-assistance',           y: 6,  z: 74 },
+      { name: 'Integrations',            y: 7,  z: 88 }
     ]
-  });
+  }]
+});
+
 
       });
+
     </script>
 
 <script>
