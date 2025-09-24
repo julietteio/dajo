@@ -11,26 +11,35 @@
     <!-- Highcharts (jsDelivr, same as your main page) -->
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
+    <!-- Global transparent background -->
+    <script>
+      Highcharts.setOptions({
+      chart: { backgroundColor: 'transparent', plotBackgroundColor: 'transparent' },
+      // For polar mode: remove any pane fill
+      pane: { background: [] }  
+});
+</script>
+
   </head>
   <body>
     <div id="chart" aria-label="Embedded chart"></div>
     <script>
       // Same options you used on index.html
       Highcharts.chart('chart', {
-        title: { text: 'Sample weekly data' },
-        subtitle: { text: 'Single-file setup • Highcharts via CDN' },
+        title: { text: '' },
+        subtitle: { text: '' },
         credits: { enabled: false },
         accessibility: { enabled: true },
         xAxis: {
           categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-          title: { text: 'Day' }
+          title: { text: '' }
         },
-        yAxis: { title: { text: 'Value' } },
+        yAxis: { title: { text: '' } },
         tooltip: { shared: true },
         legend: { align: 'center', verticalAlign: 'bottom' },
         series: [
-          { name: 'Series A', data: [29,71,106,129,144,176,135] },
-          { name: 'Series B', data: [34,80,96,140,150,170,120] }
+          { name: 'This week', data: [29,71,106,129,144,176] },
+          { name: 'Last week', data: [34,80,96,140,150,170,120] }
         ]
       });
 
