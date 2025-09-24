@@ -218,24 +218,24 @@ Highcharts.setOptions({
       // Minimal example: a responsive line chart
       document.addEventListener('DOMContentLoaded', () => {
 
-
         Highcharts.chart('chart', {
-          title: { text: 'Sample weekly data' },
-          subtitle: { text: 'Single-file setup • Highcharts via CDN' },
-          credits: { enabled: false },
-          accessibility: { enabled: true },
-          xAxis: {
-            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            title: { text: 'Day' }
-          },
-          yAxis: { title: { text: 'Value' } },
-          tooltip: { shared: true },
-          legend: { align: 'center', verticalAlign: 'bottom' },
-          series: [
-            { name: 'Series A', data: [29, 71, 106, 129, 144, 176, 135] },
-            { name: 'Series B', data: [34, 80, 96, 140, 150, 170, 120] }
-          ]
-        });
+        chart: { type: 'line' },        // optional, makes intent clear
+        title: { text: null },           // hide title
+        subtitle: { text: null },        // hide subtitle
+        credits: { enabled: false },
+        accessibility: { enabled: true },
+        xAxis: {
+          categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+          title: { text: null }
+        },
+        yAxis: { title: { text: null } },
+        tooltip: { shared: true },
+        legend: { align: 'center', verticalAlign: 'bottom' },
+        series: [
+          { name: 'This week', data: [32, 68, 102, 135, 150, 162] },
+          { name: 'Last week', data: [28, 72, 96, 120, 145, 170, 130] }
+        ]
+      });
 
         Highcharts.chart('chart2', {
           chart: { type: 'arearange', zooming: { type: 'x' } },

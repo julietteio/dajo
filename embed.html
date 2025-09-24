@@ -24,31 +24,33 @@
   <body>
     <div id="chart" aria-label="Embedded chart"></div>
     <script>
-      // Same options you used on index.html
-      Highcharts.chart('chart', {
-        title: { text: '' },
-        subtitle: { text: '' },
-        credits: { enabled: false },
-        accessibility: { enabled: true },
-        xAxis: {
-          categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-          title: { text: '' }
-        },
-        yAxis: { title: { text: '' } },
-        tooltip: { shared: true },
-        legend: { align: 'center', verticalAlign: 'bottom' },
-        series: [
-          { name: 'This week', data: [29,71,106,129,144,176] },
-          { name: 'Last week', data: [34,80,96,140,150,170,120] }
-        ]
-      });
+      
+  Highcharts.chart('chart', {
+    chart: { type: 'line' },        // optional, makes intent clear
+    title: { text: null },           // hide title
+    subtitle: { text: null },        // hide subtitle
+    credits: { enabled: false },
+    accessibility: { enabled: true },
+    xAxis: {
+      categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      title: { text: null }
+    },
+    yAxis: { title: { text: null } },
+    tooltip: { shared: true },
+    legend: { align: 'center', verticalAlign: 'bottom' },
+    series: [
+      { name: 'This week', data: [32, 68, 102, 135, 150, 162] },
+      { name: 'Last week', data: [28, 72, 96, 120, 145, 170, 130] }
+    ]
+  });
 
-      // Optional: auto-resize support (posts height to parent)
-      const ro = new ResizeObserver(() => {
-        const h = document.documentElement.scrollHeight;
-        parent.postMessage({ type: 'hc-embed-size', height: h }, '*');
-      });
-      ro.observe(document.body);
-    </script>
+  // Auto-resize support (unchanged)
+  const ro = new ResizeObserver(() => {
+    const h = document.documentElement.scrollHeight;
+    parent.postMessage({ type: 'hc-embed-size', height: h }, '*');
+  });
+  ro.observe(document.body);
+</script>
+
   </body>
 </html>
