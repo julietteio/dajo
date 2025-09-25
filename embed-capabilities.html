@@ -19,7 +19,14 @@
   <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/highcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/variable-pie.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/highcharts@11.4.8/modules/accessibility.min.js"></script>
-
+    <!-- Global transparent background -->
+    <script>
+      Highcharts.setOptions({
+      chart: { backgroundColor: 'transparent', plotBackgroundColor: 'transparent' },
+      // For polar mode: remove any pane fill
+      pane: { background: [] }  
+});
+</script>
   <script>
     // Render chart
     Highcharts.chart('capabilities', {
